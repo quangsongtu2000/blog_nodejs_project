@@ -53,9 +53,7 @@ The project uses JWT for authentication and soft deletes for data management.
     The server will run at http://localhost:3000 by default.
     Sequelize will automatically sync the database schema on startup.
 
-    - Option 2: Using docker tool
-    NOTE: You must edit the "start" script in the package.json file to "start": "node dist/app.js" to be able to run app.
-    ```bash
+    Option 2: Using docker tool
     docker-compose up -d
 ## Code Architecture
 The project follows a modular MVC-like structure with TypeScript and CommonJS:
@@ -74,7 +72,7 @@ Key Features:
 - TypeScript: Ensures type safety and better developer experience.
 
 ## Testing Guide
-1. **Start server**
+1. **Start server**<br>
     npm start
 2. **Sign up a user**
     ```bash
