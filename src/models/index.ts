@@ -59,10 +59,10 @@ db.Sequelize = Sequelize;
 db.sequelize.options.logging = false;
 
 // Implement sync database
-sequelize.sync({ alter: true }).then(() => {
-    console.log("Database synced with alter");
-}).catch((err) => {
-    console.error("Database sync failed:", err);
-});
+// sequelize.sync({ alter: true }).then(() => {
+//     console.log("Database synced with alter");
+// }).catch((err) => {
+//     console.error("Database sync failed:", err);
+// });
 
 export default db;

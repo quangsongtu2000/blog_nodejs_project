@@ -25,17 +25,17 @@ The project uses JWT for authentication and soft deletes for data management.
    ```bash
     npm install
 3. **Set up environment variables**
-    Create a .env file in the root directory based on .env.example
-    SERVER_PORT=3000
-    DB_NAME=your_db_name
-    DB_USER=your_db_user
-    DB_PASSWORD=your_db_password
-    DB_HOST=localhost
-    JWT_ACCESS_TOKEN_KEY=your-secret-key
-    JWT_PAYLOAD_KEY=your-payload-key
-    JWT_REFRESH_TOKEN_KEY=your-refreshs-key
-    ENCRYPTED_ACCESS_TOKEN_KEY=your-encrypted-access-key
-    ENCRYPTED_REFRESH_TOKEN_KEY=your-encrypted-refresh-key
+    - Create a .env file in the root directory based on .env.example.<br>
+    SERVER_PORT=3000.<br>
+    DB_NAME=your_db_name.<br>
+    DB_USER=your_db_user.<br>
+    DB_PASSWORD=your_db_password.<br> 
+    DB_HOST=localhost.<br>
+    JWT_ACCESS_TOKEN_KEY=your-secret-key.<br>
+    JWT_PAYLOAD_KEY=your-payload-key.<br>
+    JWT_REFRESH_TOKEN_KEY=your-refreshs-key.<br>
+    ENCRYPTED_ACCESS_TOKEN_KEY=your-encrypted-access-key.<br>
+    ENCRYPTED_REFRESH_TOKEN_KEY=your-encrypted-refresh-key.<br>
     DEFAULTKEY=your-default-key
 4. **Set up MySQL database**
     - Option 1: Local MySQL: Create a database in MySQL
