@@ -1,0 +1,46 @@
+# Node modules
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Logs
+*.log
+logs
+*.gz
+
+# Environment files
+.env
+.env.* 
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# TypeScript build output
+dist
+build
+out
+tsconfig.tsbuildinfo
+
+# Testing
+coverage
+.vscode
+__tests__
+*.spec.ts
+*.test.ts
+jest.config.js
+
+# Docker-related
+docker-compose*
+Dockerfile*
+
+# Optional
+.idea
+*.swp
+*.swo
+*.bak
+*.tmp

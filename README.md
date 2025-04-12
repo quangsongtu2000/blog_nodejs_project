@@ -25,18 +25,20 @@ The project uses JWT for authentication and soft deletes for data management.
    ```bash
     npm install
 3. **Set up environment variables**
-    - Create a .env file in the root directory based on .env.example.<br>
-    SERVER_PORT=3000.<br>
-    DB_NAME=your_db_name.<br>
-    DB_USER=your_db_user.<br>
-    DB_PASSWORD=your_db_password.<br> 
-    DB_HOST=localhost.<br>
-    JWT_ACCESS_TOKEN_KEY=your-secret-key.<br>
-    JWT_PAYLOAD_KEY=your-payload-key.<br>
-    JWT_REFRESH_TOKEN_KEY=your-refreshs-key.<br>
-    ENCRYPTED_ACCESS_TOKEN_KEY=your-encrypted-access-key.<br>
-    ENCRYPTED_REFRESH_TOKEN_KEY=your-encrypted-refresh-key.<br>
-    DEFAULTKEY=your-default-key
+    - Create a .env file in the root directory<br>
+    SERVER_PORT=3000<br>
+    DB_NAME=your_db_name<br>
+    DB_USER=your_db_user<br>
+    DB_PASSWORD=your_db_password<br> 
+    DB_HOST=localhost<br>
+    JWT_ACCESS_TOKEN_KEY=your-secret-key<br>
+    JWT_PAYLOAD_KEY=your-payload-key<br>
+    JWT_REFRESH_TOKEN_KEY=your-refreshs-key<br>
+    ENCRYPTED_ACCESS_TOKEN_KEY=your-encrypted-access-key<br>
+    ENCRYPTED_REFRESH_TOKEN_KEY=your-encrypted-refresh-key<br>
+    DEFAULTKEY=your-default-key<br>
+    MYSQL_ROOT_PASSWORD=your_password<br>
+    MYSQL_DATABASE=test_db
 4. **Set up MySQL database**
     - Option 1: Local MySQL: Create a database in MySQL
         ```bash
@@ -45,11 +47,16 @@ The project uses JWT for authentication and soft deletes for data management.
         ```bash
         docker command: docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=your_db_password -e MYSQL_DATABASE=your_db_name mysql:8
 5. **Run the project**
+    - Option 1: Normal start app
     ```bash 
     npm start
     The server will run at http://localhost:3000 by default.
     Sequelize will automatically sync the database schema on startup.
 
+    - Option 2: Using docker tool
+    NOTE: You must edit the "start" script in the package.json file to "start": "node dist/app.js" to be able to run app.
+    ```bash
+    docker-compose up -d
 ## Code Architecture
 The project follows a modular MVC-like structure with TypeScript and CommonJS:
     - src/controllers: Handles business logic for authentication, posts, and comments.
@@ -137,3 +144,22 @@ Key Features:
 11. **Test rate limiting**
     Send >100 requests to any endpoint within 15 minutes.
     Expected: 429 Too Many Requests with { "message": "Too many requests from this IP, please try again later" }
+
+## Using Swagger UI
+1. **Access Swagger UI**
+    Open http://localhost:3000/api-docs in your browser.<br>
+    Endpoints are grouped into:
+    - Auth: User registration and login.
+    - Posts: Manage blog posts.
+    - Comments: Manage comments for posts.
+2. **Test Endpoints**.<br>
+    Sign up a user<br>
+    Endpoint: POST /auth/signup<br>
+    Click "Try it out", enter<br>
+    ```bash
+    {
+        "email": "test@example.com",
+        "password": "123456"
+    }
+    Execute to get: {"message": "User registered"}
+    Same for the remaining api

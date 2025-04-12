@@ -4,7 +4,99 @@ import { PostRequest, PostRequestBody, PostResponse } from "./types";
 import logger from "../../utils/logger";
 import db from "../../models";
 import { modelCrud } from "../../utils";
-import moment from "moment";
+
+/**
+ * @openapi
+ * /posts/{postId}:
+ *   patch:
+ *     summary: Update a post
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Updated Post
+ *               content:
+ *                 type: string
+ *                 example: Hello Again
+ *     responses:
+ *       200:
+ *         description: Post updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: number
+ *                   example: 1
+ *                 title:
+ *                   type: string
+ *                   example: Updated Post
+ *                 content:
+ *                   type: string
+ *                   example: Hello Again
+ *                 user_id:
+ *                   type: number
+ *                   example: 1
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Unauthorized
+ *       404:
+ *         description: Post not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Post not found
+ *       429:
+ *         description: Too many write requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Too many write requests, please try again after 1 minute
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Server error
+ */
 
 /*
     [PUT] posts/:id

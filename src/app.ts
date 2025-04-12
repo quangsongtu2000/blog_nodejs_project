@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import errorhandler from "errorhandler";
 import rateLimit from "express-rate-limit";
+import swaggerUi from "swagger-ui-express";
 
 import db from "./models";
 import logger from "./utils/logger";
@@ -14,6 +15,7 @@ import {
 } from "./config/config";
 import authRoutes from "./routes/authRoutes";
 import postRoutes from "./routes/postRoutes";
+import swaggerSpec from "./config/swagger";
 
 function app() {
     const app: Express = express();
@@ -32,6 +34,7 @@ function app() {
     app.use(express.json({ limit: BODY_SIZE_LIMIT }));
     // Apply rate limiting for all routes
     app.use(limiter);
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     app.use("/auth", authRoutes);
     app.use("/posts", postRoutes);

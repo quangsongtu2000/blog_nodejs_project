@@ -45,8 +45,8 @@ const JWT = Object.freeze({
     PAYLOAD_KEY: process.env.JWT_PAYLOAD_KEY,
     // HMAC-SHA256 provides a good balance between security and performance.
     ALGORITHM: "HS256",
-    ACCESS_TOKEN_EXPIRES_IN: "30d", // 30 days
-    REFRESH_TOKEN_EXPIRES_IN: "60d"
+    ACCESS_TOKEN_EXPIRES_IN: "30m", // 30 minutes
+    REFRESH_TOKEN_EXPIRES_IN: "30d"
 });
 
 const DEFAULTKEY = process.env.DEFAULTKEY;

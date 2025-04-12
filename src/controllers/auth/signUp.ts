@@ -1,11 +1,75 @@
 import { Response } from "express";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 import db from "../../models";
-import tokenHandler from "../../utils/jwt";
 import logger from "../../utils/logger";
 import { AuthRequest, AuthRequestBody } from "./types";
 import { modelCrud } from "../../utils";
+
+/**
+ * @openapi
+ * /auth/signup:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: test@example.com
+ *               password:
+ *                 type: string
+ *                 example: 123456
+ *     responses:
+ *       200:
+ *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User registered
+ *       400:
+ *         description: User already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User already exists
+ *       429:
+ *         description: Too many auth requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Too many auth requests from this IP, please try again after 1 minute
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Server error
+ */
 
 /*
     [POST] signup/
@@ -21,7 +85,7 @@ async function signUp(req: AuthRequest<AuthRequestBody>, res: Response): Promise
             res.status(400).json({ message: "Email already exists" });
             return;
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcryptjs.hash(password, 10);
         await modelCrud.insertData(
             db.users,
             {

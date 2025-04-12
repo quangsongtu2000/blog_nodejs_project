@@ -4,6 +4,59 @@ import db from "../../models";
 import logger from "../../utils/logger";
 import { PostRequest, PostResponse, RawPost } from "./types";
 
+/**
+ * @openapi
+ * /posts:
+ *   get:
+ *     summary: Get all posts
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: List of posts
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: number
+ *                     example: 1
+ *                   title:
+ *                     type: string
+ *                     example: Test Post
+ *                   content:
+ *                     type: string
+ *                     example: Hello World
+ *                   user_id:
+ *                     type: number
+ *                     example: 1
+ *                   email:
+ *                     type: string
+ *                     example: test@example.com
+ *       429:
+ *         description: Too many read requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Too many read requests from this IP, please try again after 15 minutes
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Server error
+ */
+
 /*
     [GET] posts/
     API for get all the posts

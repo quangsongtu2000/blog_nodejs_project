@@ -5,6 +5,82 @@ import logger from "../../utils/logger";
 import { PostRequest, PostRequestBody, PostResponse } from "./types";
 import { modelCrud } from "../../utils";
 
+/**
+ * @openapi
+ * /posts:
+ *   post:
+ *     summary: Create a new post
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Test Post
+ *               content:
+ *                 type: string
+ *                 example: Hello World
+ *     responses:
+ *       201:
+ *         description: Post created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: number
+ *                   example: 1
+ *                 title:
+ *                   type: string
+ *                   example: Test Post
+ *                 content:
+ *                   type: string
+ *                   example: Hello World
+ *                 user_id:
+ *                   type: number
+ *                   example: 1
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Unauthorized
+ *       429:
+ *         description: Too many write requests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Too many write requests, please try again after 1 minute
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Server error
+ */
+
 /*
     [POST] posts/
     API for create a new post
