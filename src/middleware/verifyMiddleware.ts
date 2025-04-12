@@ -5,10 +5,10 @@ import tokenHandler from "../utils/jwt";
 import { TokenStatus } from "../utils/types";
 
 /**
- * Middleware để xác thực access token
+ * Middleware to authen access token
  * @param req API request
  * @param res API response
- * @param next Proceed to next controller nếu token hợp lệ
+ * @param next Proceed to next controller if valid token
  */
 function verifyAccessToken(
     req: CustomRequest,
@@ -51,4 +51,4 @@ function verifyAccessToken(
     }
 };
 
-export default verifyAccessToken;
+export { verifyAccessToken };

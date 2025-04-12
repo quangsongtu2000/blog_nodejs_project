@@ -10,7 +10,7 @@ import {
     TokenStatus 
 } from "./types";
 import { JWT } from "../config/config";
-import utilities from "./decryptData";
+import utilities from "./dataHandler";
 
 const tokenHandler = {
     /**
@@ -78,7 +78,7 @@ const tokenHandler = {
     /**
      * Method to verify the refresh token
      * @param refreshToken JWT refresh token from client
-     * @returns 'TOKENINVALID', 'TOKENEXPIRED' or 'TOKENVALID', email and uuid
+     * @returns 'TOKENINVALID', 'TOKENEXPIRED' or 'TOKENVALID', email
      */
     verifyRefreshToken: function (refreshToken: string): RefreshTokenVerification {
         try {
@@ -86,16 +86,16 @@ const tokenHandler = {
             const encryptedData = Buffer.from((decoded as JWTPayload).data, "base64");
             const decryptedPayload = utilities.decryptData(encryptedData,
                 JWT.PAYLOAD_KEY).toString();
-            const { email, uuid } = (JSON.parse(decryptedPayload) as PayloadRefreshToken);
+            const { email } = (JSON.parse(decryptedPayload) as PayloadRefreshToken);
 
-            logger.system.info("verifyRefreshToken", { email, uuid }, "Verify refresh token successfully");
-            return { tokenStatus: TokenStatus.Valid, email, uuid };
+            logger.system.info("verifyRefreshToken", { email }, "Verify refresh token successfully");
+            return { tokenStatus: TokenStatus.Valid, email };
         } catch (err) {
             logger.system.error("verifyRefreshToken", { err }, "Verify refresh token failed");
             if ((err as JsonWebTokenError).name === "TokenExpiredError") {
-                return { tokenStatus: TokenStatus.Expired, email: null, uuid: null };
+                return { tokenStatus: TokenStatus.Expired, email: null };
             }
-            return { tokenStatus: TokenStatus.Invalid, email: null, uuid: null };
+            return { tokenStatus: TokenStatus.Invalid, email: null };
         }
     }
 }

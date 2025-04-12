@@ -5,6 +5,10 @@ import logger from "../../utils/logger";
 import db from "../../models";
 import { modelCrud } from "../../utils";
 
+/*
+    [DELETE] posts/:id
+    API for delete the post
+ */
 async function deletePost (req: PostRequest, res: Response): Promise<void> {
     const { id } = req.params;
     const email = req.userInfo.email;

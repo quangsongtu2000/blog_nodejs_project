@@ -2,15 +2,26 @@ import express, { Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import errorhandler from "errorhandler";
+import rateLimit from "express-rate-limit";
+
 import db from "./models";
 import logger from "./utils/logger";
-import { BODY_SIZE_LIMIT, CORS_OPTIONS, SERVER_PORT } from "./config/config";
+import { 
+    BODY_SIZE_LIMIT, 
+    CORS_OPTIONS, 
+    LIMIT, 
+    SERVER_PORT 
+} from "./config/config";
 import authRoutes from "./routes/authRoutes";
 import postRoutes from "./routes/postRoutes";
-import commentRoutes from "./routes/commentRoutes";
 
 function app() {
     const app: Express = express();
+    const limiter = rateLimit({
+        windowMs: LIMIT.WINDOWMS,
+        max: LIMIT.MAX,
+        message: LIMIT.MESSAGE,
+    });
 
     // Middlewares for API app
     app.use(cors(CORS_OPTIONS));
@@ -19,10 +30,11 @@ function app() {
 
     //IMPORTANT: for parsing application/json from request
     app.use(express.json({ limit: BODY_SIZE_LIMIT }));
+    // Apply rate limiting for all routes
+    app.use(limiter);
 
     app.use("/auth", authRoutes);
-    app.use("/post", postRoutes);
-    app.use("/post", commentRoutes);
+    app.use("/posts", postRoutes);
 
     app.listen(SERVER_PORT, (): void => {
         logger.system.info(

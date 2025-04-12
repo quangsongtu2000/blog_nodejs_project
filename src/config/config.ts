@@ -10,7 +10,7 @@ const LOG = Object.freeze({
     MAX_SIZE: "20m",
     // Defining Number of days to keep backup log files. Default: null
     MAX_FILE: "7d",
-    FILE_PATHS: join(LOG_DIRECTORY, "REBUILD-%DATE%.log")
+    FILE_PATHS: join(LOG_DIRECTORY, "BLOG-%DATE%.log")
 });
 // Defining the port for Rest-API server
 const SERVER_PORT = parseInt(process.env.SERVER_PORT as string);
@@ -48,7 +48,14 @@ const JWT = Object.freeze({
     ACCESS_TOKEN_EXPIRES_IN: "30d", // 30 days
     REFRESH_TOKEN_EXPIRES_IN: "60d"
 });
+
 const DEFAULTKEY = process.env.DEFAULTKEY;
+
+const LIMIT = Object.freeze({
+    WINDOWMS: 900000, // 15 minutes
+    MAX: 100, // limit 100 request/IP
+    MESSAGE: "Too many requests from this IP, please try again later"
+});
 
 export {
     SERVER_PORT,
@@ -57,5 +64,6 @@ export {
     DATABASE_CONFIG,
     JWT,
     DEFAULTKEY,
-    LOG
+    LOG,
+    LIMIT
 }

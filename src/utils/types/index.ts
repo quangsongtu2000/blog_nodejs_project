@@ -4,17 +4,12 @@ const enum TokenStatus {
     Valid = "TOKENVALID",
 };
 
-type CheckAccessTokenExists = {
-    tokenExpireTime: string
-};
-
 type PayloadAccessToken = {
     email: string
 };
 
 type PayloadRefreshToken = {
-    email: string,
-    uuid: string
+    email: string
 };
 
 type JWTPayload = {
@@ -28,8 +23,7 @@ type AccessTokenVerification = {
 
 type RefreshTokenVerification = {
     tokenStatus: TokenStatus,
-    email: string | null,
-    uuid: string | null
+    email: string | null
 };
 
 type LogParameter = [string, object, string];
@@ -39,30 +33,14 @@ type LogSystem = {
     warn: (...args: LogParameter) => void;
     error: (...args: LogParameter) => void;
     debug: (...args: LogParameter) => void;
-}
-
-type DataConvertedToXML = { [key: string]: unknown };
-
-type CheckListForEncryption = {
-    httpUserAgent?: string,
-    httpPostmanToken?: string
-};
-
-type HoursAndMinutes = {
-    hours: number,
-    minutes: number
 };
 
 export {
     TokenStatus,
-    CheckAccessTokenExists,
     PayloadAccessToken,
     PayloadRefreshToken,
     AccessTokenVerification,
     JWTPayload,
     RefreshTokenVerification,
-    LogSystem,
-    DataConvertedToXML,
-    CheckListForEncryption,
-    HoursAndMinutes
+    LogSystem
 };

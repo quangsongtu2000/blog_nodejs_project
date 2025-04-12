@@ -47,39 +47,39 @@ class Logger {
 
     public system: Required<LogSystem> = {
         info: (event: string, parameters: object, description: string) => {
-        this.systemLogger.info({ level: "info",
-        message:(`logType="SystemLog"
-                - event="${event}"
-                - parameters=${JSON.stringify(parameters)}
-                - description="${description}"`)
-        })
+            this.systemLogger.info({ level: "info",
+            message:(`logType="SystemLog"
+                    - event="${event}"
+                    - parameters=${JSON.stringify(parameters)}
+                    - description="${description}"`)
+            })
         },
 
         error: (event: string, parameters: object, description: string) => {
-        this.systemLogger.error({ level: "error",
-        message:(`logType="SystemLog"
-                - event="${event}"
-                - parameters=${JSON.stringify(parameters)}
-                - description="${description}"`)
-        })
+            this.systemLogger.error({ level: "error",
+            message:(`logType="SystemLog"
+                    - event="${event}"
+                    - parameters=${JSON.stringify(parameters)}
+                    - description="${description}"`)
+            })
         },
 
         warn: (event: string, parameters: object, description: string) => {
-        this.systemLogger.warn({ level: "warn",
-        message:(`logType="SystemLog"
-                - event="${event}"
-                - parameters=${JSON.stringify(parameters)}
-                - description="${description}"`)
-        })
+            this.systemLogger.warn({ level: "warn",
+            message:(`logType="SystemLog"
+                    - event="${event}"
+                    - parameters=${JSON.stringify(parameters)}
+                    - description="${description}"`)
+            })
         },
 
         debug: (event: string, parameters: object, description: string) => {
-        this.systemLogger.debug({ level: "debug",
-        message:(`logType="SystemLog"
-                - event="${event}"
-                - parameters=${JSON.stringify(parameters)}
-                - description="${description}"`)
-        })
+            this.systemLogger.debug({ level: "debug",
+            message:(`logType="SystemLog"
+                    - event="${event}"
+                    - parameters=${JSON.stringify(parameters)}
+                    - description="${description}"`)
+            })
         },
     };
 }

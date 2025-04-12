@@ -1,10 +1,15 @@
+import { Response } from "express";
+
 import tokenHandler from "../../utils/jwt";
 import logger from "../../utils/logger";
 import { TokenStatus } from "../../utils/types";
 import { AuthRequest, RefreshRequestBody } from "./types";
-import { Response } from "express";
 
-async function refreshToken (req: AuthRequest<RefreshRequestBody>, res: Response): Promise<void> {
+/*
+    [POST] refresh/
+    API for refresh token
+ */
+async function refreshToken(req: AuthRequest<RefreshRequestBody>, res: Response): Promise<void> {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
@@ -23,7 +28,7 @@ async function refreshToken (req: AuthRequest<RefreshRequestBody>, res: Response
             res.status(401).json({ message: "Refresh token expired" });
             return;
         case TokenStatus.Valid:
-        if (!result.email || !result.uuid) {
+        if (!result.email) {
             res.status(500).json({ message: "Server error: Invalid refresh token payload" });
             return;
         }

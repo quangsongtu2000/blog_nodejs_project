@@ -5,6 +5,10 @@ import db from "../../models";
 import logger from "../../utils/logger";
 import { modelCrud } from "../../utils";
 
+/*
+    [POST] posts/:id/comments
+    API for create comment
+ */
 async function createComment (req: CommentRequest<CommentRequestBody>, res: Response): Promise<void> {
     const { id: postId } = req.params;
     const { content } = req.body;
