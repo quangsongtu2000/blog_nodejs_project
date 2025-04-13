@@ -51,12 +51,24 @@ const JWT = Object.freeze({
 
 const DEFAULT_KEY = process.env.DEFAULT_KEY;
 
-const LIMIT = Object.freeze({
+const RATE_LIMIT = Object.freeze({
     WINDOWMS: 900000, // 15 minutes
     MAX: 100, // limit 100 request/IP
     MESSAGE: "Too many requests from this IP, please try again later"
 });
 
+// The number of salt rounds determines the "heaviness" of the hashing algorithm (higher is more secure, but slower).
+const SALT_ROUNDS = 10;
+
+const API_PREFIX = "/api";
+
+const DEFAULT_PAGE_SIZE = 10;
+
+const DEFAULT_PAGE_NUM = 1;
+
+const MAX_PAGE_SIZE = 50;
+
+const PREVIEW_LENGTH = 1000;
 export {
     SERVER_PORT,
     BODY_SIZE_LIMIT,
@@ -65,5 +77,11 @@ export {
     JWT,
     DEFAULT_KEY,
     LOG,
-    LIMIT
-}
+    RATE_LIMIT,
+    SALT_ROUNDS,
+    API_PREFIX,
+    DEFAULT_PAGE_SIZE,
+    DEFAULT_PAGE_NUM,
+    MAX_PAGE_SIZE,
+    PREVIEW_LENGTH
+};

@@ -7,7 +7,7 @@ import { AuthRequest, RefreshRequestBody } from "./types";
 
 /**
  * @openapi
- * /auth/refresh:
+ * /api/auth/refresh:
  *   post:
  *     summary: Refresh JWT token
  *     tags: [Auth]
@@ -80,7 +80,7 @@ import { AuthRequest, RefreshRequestBody } from "./types";
  */
 
 /*
-    [POST] refresh/
+    [POST] api/refresh
     API for refresh token
  */
 async function refreshToken(req: AuthRequest<RefreshRequestBody>, res: Response): Promise<void> {

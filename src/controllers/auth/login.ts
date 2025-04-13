@@ -8,7 +8,7 @@ import { AuthRequest, AuthRequestBody } from "./types";
 
 /**
  * @openapi
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Log in a user
  *     tags: [Auth]
@@ -75,7 +75,7 @@ import { AuthRequest, AuthRequestBody } from "./types";
  */
 
 /*
-    [POST] login/
+    [POST] api/login
     API for log in
  */
 async function login(req: AuthRequest<AuthRequestBody>, res: Response): Promise<void> {

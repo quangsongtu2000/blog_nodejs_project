@@ -112,4 +112,3 @@ describe("Delete data into the database tests", () => {
         expect(result).toBeNull();
     });
 });
-

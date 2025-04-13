@@ -7,7 +7,7 @@ import { modelCrud } from "../../utils";
 
 /**
  * @openapi
- * /posts/{postId}:
+ * api/posts/{postId}:
  *   delete:
  *     summary: Delete a post (soft delete)
  *     tags: [Posts]
@@ -74,7 +74,7 @@ import { modelCrud } from "../../utils";
  */
 
 /*
-    [DELETE] posts/:id
+    [DELETE] api/posts/:id
     API for delete the post
  */
 async function deletePost (req: PostRequest, res: Response): Promise<void> {

@@ -29,7 +29,7 @@ The project uses JWT for authentication and soft deletes for data management.
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd simple-blog-nodejs-project
+   cd blog-nodejs-project
 2. **Install dependencies**:
    ```bash
     npm install
@@ -73,6 +73,7 @@ The project follows a modular MVC-like structure with TypeScript and CommonJS:<b
     - src/middleware: Custom middleware for JWT verification (verifyAccessToken) and input validation (validate.ts using Joi).<br>
     - src/utils: Utilities for logging, JWT handling, and helper functions.<br>
     - src/config: Configuration files (e.g., database settings).<br>
+    - src/tests: Unit test for functions and api.<br>
 
 Key Features:
 - JWT Authentication: Secure user login with access and refresh tokens.
@@ -86,70 +87,74 @@ Key Features:
     npm start
 2. **Sign up a user**
     ```bash
-    curl -X POST http://localhost:3000/auth/signup \
+    curl -X POST http://localhost:3000/api/auth/signup \
     -H "Content-Type: application/json" \
     -d '{"email": "test@example.com", "password": "123456"}'
     Expected: 200 OK with { "User registered successfully" }
 3. **Log in**
     ```bash
-    curl -X POST http://localhost:3000/auth/login \
+    curl -X POST http://localhost:3000/api/auth/login \
     -H "Content-Type: application/json" \
     -d '{"email": "test@example.com", "password": "123456"}'
     Expected: 200 OK with { "token": "<jwt-token>", "refreshToken": "<refresh-token>" }
 4. **Create a post**
     ```bash
-    curl -X POST http://localhost:3000/posts \
+    curl -X POST http://localhost:3000/api/posts \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"title": "Test Post", "content": "Hello World"}'
-    Expected: 201 CREATED with { "id": 3, "title": "Hello", "content": "World", "user_id": 1 }.
+    Expected: 201 CREATED with { "id": 9, "title": "Hi Girl", "content": "a dangerous tower, bro","user_id": 2, "created_at": "2025-04-13T11:11:58.791Z"}.
 5. **Update a post**
     ```bash
-    curl -X PUT http://localhost:3000/posts/1 \
+    curl -X PUT http://localhost:3000/api/posts/1 \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"title": "Real Post", "content": "Hello World again"}'
     Expected: 200 OK with { "id": 3, "title": "Eyyy", "content": "What do you do in your free time?", "user_id": 1 }
 6. **Get all posts**
     ```bash
-    curl -X GET http://localhost:3000/posts
-    Expected: 200 OK with a list of posts ([{"id": 2, "title": "hello", "content": "Hello world", "user_id": 1, "email": "abc@gmail.com"}, {...}])
-7. **Comment on a post**
+    curl -X GET http://localhost:3000/api/posts
+    Expected: 200 OK with a list of posts ([{"id": 2, "title": "hello", "content": "Hello world", "user_id": 1, "email": "abc@gmail.com", "created_at": "2025-04-12T04:24:01.000Z", "updated_at": "2025-04-13T11:15:40.000Z"}, {...}], "pagination": {"pageSize": 10, "pageNum": 1, "totalPosts": 7, "totalPages": 1})
+7. **Get one post**
     ```bash
-    curl -X POST http://localhost:3000/post/1/comments \
+    curl -X GET http://localhost:3000/api/posts/11
+    Expected: 200 OK with a list of posts ({"id": 11, "title": "hello", "content": "Hello world", "user_id": 1, "email": "abc@gmail.com", "created_at": "2025-04-12T04:24:01.000Z"}, "updated_at": "2025-04-13T11:15:40.000Z")
+8. **Comment on a post (TBU update/get/delete for commet API later)**
+    ```bash
+    curl -X POST http://localhost:3000/api/post/1/comments \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"content": "Great post!"}'
-    Expected: 200 OK with { "message": "Comment created" }
-8. **Delete a post**
+    Expected: 200 OK with {"id": 4, "content": "a dangerous tower, bro", "user_id": 2,"post_id": 3, "created_at": "2025-04-13T11:09:06.419Z"}
+9. **Delete a post**
     ```bash
-    curl -X DELETE http://localhost:3000/posts/1 \
+    curl -X DELETE http://localhost:3000/api/posts/1 \
     -H "Authorization: Bearer <jwt-token>"
     Expected: 200 OK with { "message": "Post and related comments deleted" }
 
     Error case (post not owned by user):
-    curl -X DELETE http://localhost:3000/posts/999 \
+    curl -X DELETE http://localhost:3000/api/posts/999 \
     -H "Authorization: Bearer <jwt-token>" ```
     Expected: 404 Not Found or 403 Forbidden with { "message": "Post not found" } or { "message": "Forbidden: You can only delete your own posts" }
-9. **Refresh token**
+10. **Refresh token**
     ```bash
-    curl -X POST http://localhost:3000/auth/refresh \
+    curl -X POST http://localhost:3000/api/auth/refresh \
     -H "Content-Type: application/json" \
     -d '{"refreshToken": "<refresh-token>"}'
     Expected: 200 OK with { "accessToken": "<new-jwt-token>"}
 
     Error case (invalid token)
-    curl -X POST http://localhost:3000/auth/refresh \
+    curl -X POST http://localhost:3000/api/auth/refresh \
     -H "Content-Type: application/json" \
     -d '{"refreshToken": "invalid-token"}' ```
     Expected: 401 Unauthorized with { "message": "Invalid refresh token" }.
-10. **Test validation errors**
+11. **Test validation errors**
     ```bash
-    curl -X POST http://localhost:3000/posts \
+    curl -X POST http://localhost:3000/api/posts \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"title": "", "content": "Hello"}'
-11. **Test rate limiting**
+12. **Test rate limiting**
     Send >100 requests to any endpoint within 15 minutes.
     Expected: 429 Too Many Requests with { "message": "Too many requests from this IP, please try again later" }
 

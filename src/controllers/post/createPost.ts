@@ -7,7 +7,7 @@ import { modelCrud } from "../../utils";
 
 /**
  * @openapi
- * /posts:
+ * api/posts:
  *   post:
  *     summary: Create a new post
  *     tags: [Posts]
@@ -82,7 +82,7 @@ import { modelCrud } from "../../utils";
  */
 
 /*
-    [POST] posts/
+    [POST] api/posts/
     API for create a new post
  */
 async function createPost (req: PostRequest<PostRequestBody>, res: Response): Promise<void> {
@@ -108,14 +108,16 @@ async function createPost (req: PostRequest<PostRequestBody>, res: Response): Pr
             {   
                 title,
                 content,
-                user_id: userId
+                user_id: userId,
+                created_at: new Date()
             }
         );
-        const postResponse: PostResponse = {
+        const postResponse: Omit<PostResponse, "updated_at" | "email"> = {
             id: post.id,
             title: post.title,
             content: post.content,
             user_id: post.user_id,
+            created_at: post.created_at.toISOString()
         };
         logger.system.info("createPost", { userId, title }, "Post created by user successfully");
         res.status(201).json(postResponse);

@@ -47,4 +47,4 @@ export {
     postRequestValidaton,
     commentRequestValidaton,
     AuthRequestValidaton
-}
+};

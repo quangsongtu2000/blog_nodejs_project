@@ -1,13 +1,13 @@
 import { Response } from "express";
 
-import { CommentRequest, CommentRequestBody } from "./types";
+import { CommentRequest, CommentRequestBody, CommentResponse } from "./types";
 import db from "../../models";
 import logger from "../../utils/logger";
 import { modelCrud } from "../../utils";
 
 /**
  * @openapi
- * /posts/{postId}/comments:
+ * api/posts/{postId}/comments:
  *   post:
  *     summary: Create a comment for a post
  *     tags: [Comments]
@@ -52,6 +52,12 @@ import { modelCrud } from "../../utils";
  *                 post_id:
  *                   type: number
  *                   example: 1
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
  *       401:
  *         description: Unauthorized
  *         content:
@@ -95,7 +101,7 @@ import { modelCrud } from "../../utils";
  */
 
 /*
-    [POST] posts/:id/comments
+    [POST] api/posts/:id/comments
     API for create comment
  */
 async function createComment (req: CommentRequest<CommentRequestBody>, res: Response): Promise<void> {
@@ -129,10 +135,18 @@ async function createComment (req: CommentRequest<CommentRequestBody>, res: Resp
                 content,
                 user_id: userId,
                 post_id: parseInt(postId),
+                created_at: new Date()
             }
         )
+        const commentResponse: CommentResponse = {
+            id: comment.id,
+            content: comment.content,
+            user_id: comment.user_id,
+            post_id: comment.post_id,
+            created_at: comment.created_at.toISOString()
+        };
         logger.system.info("createComment", { postId, userId }, `Comment added to post ${postId} by user ${userId}`);
-        res.status(201).json(comment);
+        res.status(201).json(commentResponse);
     } catch (error) {
         logger.system.error(
             "createComment", 

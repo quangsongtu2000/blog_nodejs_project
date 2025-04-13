@@ -6,4 +6,4 @@ export {
     modelCrud,
     logger,
     utilities
-}
+};

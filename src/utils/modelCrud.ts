@@ -83,4 +83,4 @@ export default {
     insertData,
     updateData,
     deleteData
-}
+};

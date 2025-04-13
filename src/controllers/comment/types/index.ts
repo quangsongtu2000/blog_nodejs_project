@@ -17,10 +17,11 @@ type CommentResponse = {
     content: string;
     user_id: number;
     post_id: number;
+    created_at: string;
 };
 
 export {
     CommentRequest,
     CommentRequestBody,
     CommentResponse
-}
+};

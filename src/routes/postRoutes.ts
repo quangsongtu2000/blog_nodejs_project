@@ -4,15 +4,18 @@ import {
     createPost, 
     updatePost, 
     deletePost, 
-    getPost 
+    getPost,
+    getOnePost 
 } from "../controllers/post";
 import { createComment } from "../controllers/comment";
 import { verifyAccessToken } from "../middleware";
 import validator from "../middleware/validator"
 
 const router = Router();
-
-router.get("/", verifyAccessToken as RequestHandler, getPost as unknown as RequestHandler);
+// Get all posts
+router.get("/", getPost as unknown as RequestHandler);
+// Get one post
+router.get("/:id", getOnePost as unknown as RequestHandler);
 router.post("/", verifyAccessToken as RequestHandler, 
     validator("postRequestValidaton"),
     createPost as unknown as RequestHandler);

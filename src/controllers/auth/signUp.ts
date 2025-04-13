@@ -5,10 +5,11 @@ import db from "../../models";
 import logger from "../../utils/logger";
 import { AuthRequest, AuthRequestBody } from "./types";
 import { modelCrud } from "../../utils";
+import { SALT_ROUNDS } from "../../config/config";
 
 /**
  * @openapi
- * /auth/signup:
+ * api/auth/signup:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
@@ -72,7 +73,7 @@ import { modelCrud } from "../../utils";
  */
 
 /*
-    [POST] signup/
+    [POST] api/signup
     API for sign up
  */
 async function signUp(req: AuthRequest<AuthRequestBody>, res: Response): Promise<void> {
@@ -85,7 +86,7 @@ async function signUp(req: AuthRequest<AuthRequestBody>, res: Response): Promise
             res.status(400).json({ message: "Email already exists" });
             return;
         }
-        const hashedPassword = await bcryptjs.hash(password, 10);
+        const hashedPassword = await bcryptjs.hash(password, SALT_ROUNDS);
         await modelCrud.insertData(
             db.users,
             {

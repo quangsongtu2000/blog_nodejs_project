@@ -8,9 +8,10 @@ import swaggerUi from "swagger-ui-express";
 import db from "./models";
 import logger from "./utils/logger";
 import { 
+    API_PREFIX,
     BODY_SIZE_LIMIT, 
     CORS_OPTIONS, 
-    LIMIT, 
+    RATE_LIMIT, 
     SERVER_PORT 
 } from "./config/config";
 import authRoutes from "./routes/authRoutes";
@@ -20,9 +21,9 @@ import swaggerSpec from "./config/swagger";
 function app() {
     const app: Express = express();
     const limiter = rateLimit({
-        windowMs: LIMIT.WINDOWMS,
-        max: LIMIT.MAX,
-        message: LIMIT.MESSAGE,
+        windowMs: RATE_LIMIT.WINDOWMS,
+        max: RATE_LIMIT.MAX,
+        message: RATE_LIMIT.MESSAGE,
     });
 
     // Middlewares for API app
@@ -34,10 +35,10 @@ function app() {
     app.use(express.json({ limit: BODY_SIZE_LIMIT }));
     // Apply rate limiting for all routes
     app.use(limiter);
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use(`${API_PREFIX}-docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-    app.use("/auth", authRoutes);
-    app.use("/posts", postRoutes);
+    app.use(`${API_PREFIX}/auth`, authRoutes);
+    app.use(`${API_PREFIX}/posts`, postRoutes);
 
     app.listen(SERVER_PORT, (): void => {
         logger.system.info(

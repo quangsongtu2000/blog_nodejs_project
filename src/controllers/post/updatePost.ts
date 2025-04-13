@@ -1,13 +1,13 @@
 import { Response } from "express";
 
-import { PostRequest, PostRequestBody, PostResponse } from "./types";
+import { PostRequest, PostRequestBody } from "./types";
 import logger from "../../utils/logger";
 import db from "../../models";
 import { modelCrud } from "../../utils";
 
 /**
  * @openapi
- * /posts/{postId}:
+ * api/posts/{postId}:
  *   patch:
  *     summary: Update a post
  *     tags: [Posts]
@@ -99,10 +99,10 @@ import { modelCrud } from "../../utils";
  */
 
 /*
-    [PUT] posts/:id
+    [PUT] api/posts/:id
     API for edit the post
  */
-async function updatePost (req: PostRequest<PostRequestBody>, res: Response): Promise<void> {
+async function updatePost(req: PostRequest<PostRequestBody>, res: Response): Promise<void> {
     const { id } = req.params;
     const { title, content } = req.body;
     const email = req.userInfo.email;
@@ -143,11 +143,11 @@ async function updatePost (req: PostRequest<PostRequestBody>, res: Response): Pr
             },
             { id: userId }
         );
-        const postResponse: PostResponse = {
+        const postResponse = {
             id: post.id,
             title,
             content,
-            user_id: post.user_id,
+            user_id: post.user_id
         };
         logger.system.info("updatePost", { userId }, "Post updated by user successfully");
         res.status(200).json(postResponse);

@@ -7,7 +7,7 @@ type CommonUserInfo = {
 
 interface CustomRequest extends Request {
     userInfo: CommonUserInfo; // User information
-}
+};
 
 type ValidatorSchemas = {
     [key: string]: Joi.ObjectSchema;
