@@ -51,7 +51,8 @@ const postModel = (sequelize: Sequelize, DataTypes: any): typeof Model => {
             },
             updated_at: { 
                 type: DataTypes.DATE, 
-                allowNull: true 
+                allowNull: true,
+                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
             },
             created_at: {
                 type: DataTypes.DATE,

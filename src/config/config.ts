@@ -49,7 +49,7 @@ const JWT = Object.freeze({
     REFRESH_TOKEN_EXPIRES_IN: "30d"
 });
 
-const DEFAULTKEY = process.env.DEFAULTKEY;
+const DEFAULT_KEY = process.env.DEFAULT_KEY;
 
 const LIMIT = Object.freeze({
     WINDOWMS: 900000, // 15 minutes
@@ -63,7 +63,7 @@ export {
     CORS_OPTIONS,
     DATABASE_CONFIG,
     JWT,
-    DEFAULTKEY,
+    DEFAULT_KEY,
     LOG,
     LIMIT
 }

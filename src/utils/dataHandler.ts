@@ -1,11 +1,11 @@
-import { DEFAULTKEY } from "../config/config";
+import { DEFAULT_KEY } from "../config/config";
 import crypto from "crypto";
 
 const utilities = {
     /**
      * Method to encrypt data with a secret key using 'aes-256-cbc' algorithm
      * @param data data needs encryption
-     * @param key secret key, if it not provide, use DEFAULTKEY
+     * @param key secret key, if it not provide, use DEFAULT_KEY
      * @returns buffer data is encrypted
      */
     encryptData: (data: string, key: string | null = null): Buffer => {
@@ -15,7 +15,7 @@ const utilities = {
         // Cipher algorithm "aes-256-cbc" only accepts a 32-character or 256-bytes key
         const keyBuffer = Buffer.alloc(32);
         // Copy the key into the buffer
-        keyBuffer.write(key ?? DEFAULTKEY!);
+        keyBuffer.write(key ?? DEFAULT_KEY!);
 
         // Create the cipher object
         const cipher = crypto.createCipheriv("aes-256-cbc", keyBuffer, iv);
@@ -28,7 +28,7 @@ const utilities = {
     /**
      * Method to decrypt data with a secret key using 'aes-256-cbc' algorithm
      * @param data data needs decryption
-     * @param key secret key, if it not provide, use DEFAULTKEY
+     * @param key secret key, if it not provide, use DEFAULT_KEY
      * @returns buffer data is decrypted
      */
     decryptData: (encryptedData: Buffer, key: string | null = null): Buffer => {
@@ -38,7 +38,7 @@ const utilities = {
         // Cipher algorithm "aes-256-cbc" only accepts a 32-character or 256-bytes key
         const keyBuffer = Buffer.alloc(32);
         // Copy the key into the buffer
-        keyBuffer.write(key ?? DEFAULTKEY!);
+        keyBuffer.write(key ?? DEFAULT_KEY!);
 
         // Create the decipher object
         const decipher = crypto.createDecipheriv("aes-256-cbc", keyBuffer, iv);

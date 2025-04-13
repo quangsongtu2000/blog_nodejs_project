@@ -1,6 +1,6 @@
-# Simple Blog Platform
+# Simple Blog Nodejs Project
 
-A lightweight blog platform built with Node.js, TypeScript, Express, Sequelize, and MySQL. 
+A lightweight blog project built with Node.js, TypeScript, Express, Sequelize, and MySQL. 
 Users can register, log in, create/edit/delete posts, view public posts, and comment on posts. 
 The project uses JWT for authentication and soft deletes for data management.
 
@@ -16,29 +16,39 @@ The project uses JWT for authentication and soft deletes for data management.
 - **npm**: v8 or higher
 - **Git**: For cloning the repository
 
+## Tech Stack
+- **Node.js**: Runtime environment
+- **Express.js**: Web framework
+- **TypeScript**: For type safety
+- **Sequelize**: ORM for database operations
+- **Jest**: Testing framework
+- **Joi**: Schema validation
+- **bcryptjs**: Password hashing
+
 ## Installation and Setup
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd simple-blog-platform
+   cd simple-blog-nodejs-project
 2. **Install dependencies**:
    ```bash
     npm install
 3. **Set up environment variables**
-    - Create a .env file in the root directory<br>
-    SERVER_PORT=3000<br>
-    DB_NAME=your_db_name<br>
-    DB_USER=your_db_user<br>
-    DB_PASSWORD=your_db_password<br> 
-    DB_HOST=localhost<br>
-    JWT_ACCESS_TOKEN_KEY=your-secret-key<br>
-    JWT_PAYLOAD_KEY=your-payload-key<br>
-    JWT_REFRESH_TOKEN_KEY=your-refreshs-key<br>
-    ENCRYPTED_ACCESS_TOKEN_KEY=your-encrypted-access-key<br>
-    ENCRYPTED_REFRESH_TOKEN_KEY=your-encrypted-refresh-key<br>
-    DEFAULTKEY=your-default-key<br>
-    MYSQL_ROOT_PASSWORD=your_password<br>
-    MYSQL_DATABASE=test_db
+    - Create a .env file in the root directory base on .env.example file<br>
+    ```bash
+        SERVER_PORT=
+        DB_NAME=
+        DB_USER=
+        DB_PASSWORD= 
+        DB_HOST=
+        JWT_ACCESS_TOKEN_KEY=
+        JWT_PAYLOAD_KEY=
+        JWT_REFRESH_TOKEN_KEY=
+        ENCRYPTED_ACCESS_TOKEN_KEY=
+        ENCRYPTED_REFRESH_TOKEN_KEY=
+        DEFAULT_KEY=
+        MYSQL_ROOT_PASSWORD=
+        MYSQL_DATABASE=
 4. **Set up MySQL database**
     - Option 1: Local MySQL: Create a database in MySQL
         ```bash
@@ -56,13 +66,13 @@ The project uses JWT for authentication and soft deletes for data management.
     Option 2: Using docker tool
     docker-compose up -d
 ## Code Architecture
-The project follows a modular MVC-like structure with TypeScript and CommonJS:
-    - src/controllers: Handles business logic for authentication, posts, and comments.
-    - src/models: Sequelize models for users, posts, and comments, with associations and soft deletes (is_deleted).
-    - src/routes: Express routes for /auth, /posts, and /comments, using middleware for validation and JWT authentication.
-    - src/middleware: Custom middleware for JWT verification (verifyAccessToken) and input validation (validate.ts using Joi).
-    - src/utils: Utilities for logging, JWT handling, and helper functions.
-    - src/config: Configuration files (e.g., database settings).
+The project follows a modular MVC-like structure with TypeScript and CommonJS:<br>
+    - src/controllers: Handles business logic for authentication, posts, and comments.<br>
+    - src/models: Sequelize models for users, posts, and comments, with associations and soft deletes (is_deleted).<br>
+    - src/routes: Express routes for /auth, /posts, and /comments, using middleware for validation and JWT authentication.<br>
+    - src/middleware: Custom middleware for JWT verification (verifyAccessToken) and input validation (validate.ts using Joi).<br>
+    - src/utils: Utilities for logging, JWT handling, and helper functions.<br>
+    - src/config: Configuration files (e.g., database settings).<br>
 
 Key Features:
 - JWT Authentication: Secure user login with access and refresh tokens.
