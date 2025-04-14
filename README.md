@@ -50,9 +50,31 @@ The project uses JWT for authentication and soft deletes for data management.
         MYSQL_ROOT_PASSWORD=
         MYSQL_DATABASE=
 4. **Set up MySQL database**
-    - Option 1: Local MySQL: Create a database in MySQL
+    - Option 1: Local MySQL:
+        Install MySQL (if not already installed)<br>
+        Create a database in MySQL:
         ```bash
-        sql: CREATE DATABASE your_db_name;
+        mysql -u root -p
+        CREATE DATABASE blog_db;
+        exit
+        ```
+        Log in to MySQL:
+        ```bash
+        mysql -u your_username -p your_password
+        ```
+        Verify the database was created:
+        ```bash
+        SHOW DATABASES;
+        ```
+        Configure the database in .env:
+        Ensure the .env file (created in step 3) has the correct database configuration:
+        ```bash
+        DB_HOST=localhost
+        DB_PORT=3306
+        DB_USER=root
+        DB_PASSWORD=password
+        DB_NAME=blog_db
+        ```
     - Option 2: Docker: Run MySQL using Docker
         ```bash
         docker command: docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=your_db_password -e MYSQL_DATABASE=your_db_name mysql:8
@@ -60,11 +82,14 @@ The project uses JWT for authentication and soft deletes for data management.
     - Option 1: Normal start app
     ```bash 
     npm start
+    ```
     The server will run at http://localhost:3000 by default.
     Sequelize will automatically sync the database schema on startup.
 
     Option 2: Using docker tool
+    ```bash
     docker-compose up -d
+    ```
 ## Code Architecture
 The project follows a modular MVC-like structure with TypeScript and CommonJS:<br>
     - src/controllers: Handles business logic for authentication, posts, and comments.<br>
@@ -90,12 +115,14 @@ Key Features:
     curl -X POST http://localhost:3000/api/auth/signup \
     -H "Content-Type: application/json" \
     -d '{"email": "test@example.com", "password": "123456"}'
+    ```
     Expected: 200 OK with { "User registered successfully" }
 3. **Log in**
     ```bash
     curl -X POST http://localhost:3000/api/auth/login \
     -H "Content-Type: application/json" \
     -d '{"email": "test@example.com", "password": "123456"}'
+    ```
     Expected: 200 OK with { "token": "<jwt-token>", "refreshToken": "<refresh-token>" }
 4. **Create a post**
     ```bash
@@ -103,6 +130,7 @@ Key Features:
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"title": "Test Post", "content": "Hello World"}'
+    ```
     Expected: 201 CREATED with { "id": 9, "title": "Hi Girl", "content": "a dangerous tower, bro","user_id": 2, "created_at": "2025-04-13T11:11:58.791Z"}.
 5. **Update a post**
     ```bash
@@ -110,14 +138,17 @@ Key Features:
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"title": "Real Post", "content": "Hello World again"}'
+    ```
     Expected: 200 OK with { "id": 3, "title": "Eyyy", "content": "What do you do in your free time?", "user_id": 1 }
 6. **Get all posts**
     ```bash
     curl -X GET http://localhost:3000/api/posts
+    ```
     Expected: 200 OK with a list of posts ([{"id": 2, "title": "hello", "content": "Hello world", "user_id": 1, "email": "abc@gmail.com", "created_at": "2025-04-12T04:24:01.000Z", "updated_at": "2025-04-13T11:15:40.000Z"}, {...}], "pagination": {"pageSize": 10, "pageNum": 1, "totalPosts": 7, "totalPages": 1})
 7. **Get one post**
     ```bash
     curl -X GET http://localhost:3000/api/posts/11
+    ```
     Expected: 200 OK with a list of posts ({"id": 11, "title": "hello", "content": "Hello world", "user_id": 1, "email": "abc@gmail.com", "created_at": "2025-04-12T04:24:01.000Z"}, "updated_at": "2025-04-13T11:15:40.000Z")
 8. **Comment on a post (TBU update/get/delete for commet API later)**
     ```bash
@@ -125,28 +156,35 @@ Key Features:
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer <jwt-token>" \
     -d '{"content": "Great post!"}'
+    ```
     Expected: 200 OK with {"id": 4, "content": "a dangerous tower, bro", "user_id": 2,"post_id": 3, "created_at": "2025-04-13T11:09:06.419Z"}
 9. **Delete a post**
     ```bash
     curl -X DELETE http://localhost:3000/api/posts/1 \
     -H "Authorization: Bearer <jwt-token>"
+    ```
     Expected: 200 OK with { "message": "Post and related comments deleted" }
 
     Error case (post not owned by user):
+    ```bash
     curl -X DELETE http://localhost:3000/api/posts/999 \
-    -H "Authorization: Bearer <jwt-token>" ```
+    -H "Authorization: Bearer <jwt-token>"
+    ```
     Expected: 404 Not Found or 403 Forbidden with { "message": "Post not found" } or { "message": "Forbidden: You can only delete your own posts" }
 10. **Refresh token**
     ```bash
     curl -X POST http://localhost:3000/api/auth/refresh \
     -H "Content-Type: application/json" \
     -d '{"refreshToken": "<refresh-token>"}'
+    ```
     Expected: 200 OK with { "accessToken": "<new-jwt-token>"}
 
     Error case (invalid token)
+    ```bash
     curl -X POST http://localhost:3000/api/auth/refresh \
     -H "Content-Type: application/json" \
-    -d '{"refreshToken": "invalid-token"}' ```
+    -d '{"refreshToken": "invalid-token"}'
+    ```
     Expected: 401 Unauthorized with { "message": "Invalid refresh token" }.
 11. **Test validation errors**
     ```bash
@@ -174,5 +212,6 @@ Key Features:
         "email": "test@example.com",
         "password": "123456"
     }
+    ```
     Execute to get: {"message": "User registered"}
     Same for the remaining api
